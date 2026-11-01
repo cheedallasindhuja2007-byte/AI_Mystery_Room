@@ -1,0 +1,26 @@
+{
+  "name": "ai-mystery-room-app",
+  "version": "1.0.0",
+  "description": "AI Mystery Room - Interactive MERN & Gemini mystery investigation application",
+  "scripts": {
+    "build": "npm --prefix server install && npm --prefix client install && npm --prefix client run build",
+    "start": "node server/server.js",
+    "test": "npm --prefix server test",
+    "test:e2e": "npm --prefix server run test:e2e",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev"
+  },
+  "keywords": [
+    "ai",
+    "mystery",
+    "gemini",
+    "mern",
+    "react",
+    "vite",
+    "express",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "MIT"
+}
+

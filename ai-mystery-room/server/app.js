@@ -50,12 +50,12 @@ const clientDistPath = path.resolve(__dirname, '../client/dist');
 if (fs.existsSync(clientDistPath)) {
   app.use(express.static(clientDistPath));
 
-  // Catch-all route to serve React app for SPA routing (excluding /api routes)
-  app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api')) {
-      return next();
+  // Catch-all SPA fallback middleware (compatible with Express 5 path-to-regexp)
+  app.use((req, res, next) => {
+    if (req.method === 'GET' && !req.path.startsWith('/api')) {
+      return res.sendFile(path.join(clientDistPath, 'index.html'));
     }
-    res.sendFile(path.join(clientDistPath, 'index.html'));
+    next();
   });
 }
 

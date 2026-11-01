@@ -2,6 +2,9 @@
   "name": "ai-mystery-room-app",
   "version": "1.0.0",
   "description": "AI Mystery Room - Interactive MERN & Gemini mystery investigation application",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "build": "npm --prefix server install && npm --prefix client install && npm --prefix client run build",
     "start": "node server/server.js",
@@ -23,4 +26,3 @@
   "author": "",
   "license": "MIT"
 }
-

@@ -2,6 +2,9 @@
   "name": "ai-mystery-room-root",
   "version": "1.0.0",
   "description": "Root package for AI Mystery Room monorepo",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "build": "npm --prefix ai-mystery-room/server install && npm --prefix ai-mystery-room/client install && npm --prefix ai-mystery-room/client run build",
     "start": "node ai-mystery-room/server/server.js",
@@ -11,4 +14,3 @@
   "author": "",
   "license": "MIT"
 }
-

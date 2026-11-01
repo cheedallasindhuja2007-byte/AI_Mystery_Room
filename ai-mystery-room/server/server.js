@@ -2,14 +2,16 @@
 const path = require('path');
 const dns = require('dns');
 
-// Configure custom DNS resolvers for reliable MongoDB Atlas SRV lookups on Windows/certain ISPs
-try {
-  dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
-} catch (e) {
-  // Ignore if not permitted in environment
+// On Windows, configure fallback DNS for local SRV lookups; on Linux cloud hosts (Render/Railway), use system DNS
+if (process.platform === 'win32') {
+  try {
+    dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
+  } catch (e) {
+    // Ignore if not permitted
+  }
 }
 
-// Load local .env (in production clouds, variables are injected automatically via process.env)
+// Load local .env if present (in cloud platforms, env vars are injected via process.env)
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const mongoose = require('mongoose');
 const app = require('./app');
@@ -19,6 +21,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   console.error('❌ MONGODB_URI environment variable is missing.');
+  console.error('👉 Please configure MONGODB_URI in your cloud deployment settings (e.g. Render Dashboard -> Environment).');
   process.exit(1);
 }
 
@@ -27,7 +30,7 @@ mongoose
   .then(() => {
     console.log('✅ MongoDB connected successfully');
     app.listen(PORT, '0.0.0.0', () => {
-      console.log(`🚀 Server listening on http://0.0.0.0:${PORT}`);
+      console.log(`🚀 Server listening on port ${PORT}`);
     });
   })
   .catch((err) => {
